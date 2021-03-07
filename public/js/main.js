@@ -24,7 +24,7 @@ function newItem() {
     })
   
     .then((data) => {
-      addNewValue(data.naam);
+      addNewValue(data.naam, data.id);
       
     })
     
@@ -40,7 +40,7 @@ function newItem() {
 
 
 
-function addNewValue(value) {
+function addNewValue(value, id) {
   const li = document.createElement("li");
     const tekst = document.createTextNode(value);
     li.appendChild(tekst);
@@ -58,12 +58,22 @@ function addNewValue(value) {
     li.appendChild(button);
   
    button.addEventListener("click", (event) => {
-     console.log(event);
-     ul.removeChild(li);
-   })
 
+    fetch(`http://localhost:3000/api/boodschappen/${id}`, {
+      method: "DELETE",
+    })
+    .then((response) => {
+      if (response.status === 200){
+        console.log(event);
+        ul.removeChild(li);
+      }
+      if (response.status === 404){
+        throw Error('Niet gevonden')
+      }
+      throw Error('Er liep iets mis')
+    })
 
-   
+   })  
 };
 
 window.onload = () => {
@@ -108,7 +118,7 @@ window.onload = () => {
 
   .then((data) => {
     data.forEach(element => {
-      addNewValue(element.naam);
+      addNewValue(element.naam, element.id);
     });
     loader.style.display = "none";
     
