@@ -27,7 +27,7 @@ router.post('/', function (req, res) {
 
     const boodschap = {naam: req.body.naam, id: Date.now()};
     array.push(boodschap);
-    res.sendStatus(200);
+    res.json(boodschap);
 })
 
 router.delete('/:id', function (req, res) {
@@ -35,8 +35,6 @@ router.delete('/:id', function (req, res) {
   
   res.sendStatus(200);
 })
-
-
 
 
 module.exports = router

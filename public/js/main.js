@@ -1,13 +1,39 @@
 
+
 function newItem() {
   
   const inputValue = document.querySelector("#myInput").value;
   
   if (inputValue !== "") {
 
-    document.getElementById("myInput").value = "";
-    addNewValue(inputValue);
+    const data = {naam: inputValue};
 
+    fetch('http://localhost:3000/api/boodschappen', {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {'Content-type': 'application/json; charset=UTF-8'},
+    })
+    .then((response) => {
+      if (response.status === 200){
+        return response.json()
+      }
+      if (response.status === 404){
+        throw Error('Niet gevonden')
+      }
+      throw Error('Er liep iets mis')
+    })
+  
+    .then((data) => {
+      addNewValue(data.naam);
+      
+    })
+    
+    .catch((error) => {
+      alert(`Catch: ${error}`);
+    })
+
+    document.getElementById("myInput").value = "";
+    
   }
 
 };
