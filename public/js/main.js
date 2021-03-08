@@ -3,7 +3,8 @@
 function newItem() {
   
   const inputValue = document.querySelector("#myInput").value;
-  
+  const amountValue = document.querySelector("#amount").value;
+
   if (inputValue !== "") {
 
     const data = {naam: inputValue};

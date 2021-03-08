@@ -18,6 +18,7 @@ body {
     padding-bottom: 0.5rem;
     background-color: rgb(134, 179, 67);
     color: navy;
+    font-weight: bold;
 }
 
 .addBtn:hover {
