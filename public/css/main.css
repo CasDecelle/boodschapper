@@ -38,6 +38,10 @@ input {
     padding-top: 1rem;
 }
 
+.number--card {
+    width: 2rem;
+}
+
 ul {
     margin: 0;
     padding: 0;
