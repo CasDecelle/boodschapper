@@ -25,9 +25,14 @@ router.post('/', function (req, res) {
     
     console.log('Got body:', req.body.naam);
 
-    const boodschap = {naam: req.body.naam, id: Date.now()};
-    array.push(boodschap);
-    res.json(boodschap);
+    if( req.body.hoeveelheid > 0 && req.body.hoeveelheid <= 10) {
+      const boodschap = {naam: req.body.naam, id: Date.now(), hoeveelheid: req.body.hoeveelheid };
+
+      array.push(boodschap);
+      res.json(boodschap);
+    } else {
+      res.sendStatus(400);
+    }    
 })
 
 router.delete('/:id', function (req, res) {

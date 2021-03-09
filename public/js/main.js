@@ -5,9 +5,9 @@ function newItem() {
   const inputValue = document.querySelector("#myInput").value;
   const amountValue = document.querySelector("#amount").value;
 
-  if (inputValue !== "") {
+  if (inputValue !== "" && amountValue > 0 && amountValue <= 10) {
 
-    const data = {naam: inputValue};
+    const data = {naam: inputValue, hoeveelheid: amountValue};
 
     fetch('http://localhost:3000/api/boodschappen', {
       method: "POST",
@@ -25,7 +25,7 @@ function newItem() {
     })
   
     .then((data) => {
-      addNewValue(data.naam, data.id);
+      addNewValue(data.naam, data.id, data.hoeveelheid);
       
     })
     
@@ -41,10 +41,21 @@ function newItem() {
 
 
 
-function addNewValue(value, id) {
+function addNewValue(value, id, amount = 1) {
   const li = document.createElement("li");
+    const bdschp = document.createElement("div");
     const tekst = document.createTextNode(value);
-    li.appendChild(tekst);
+
+    bdschp.appendChild(tekst);
+
+    const amnt = document.createElement("div");
+    const getal = document.createTextNode(amount)
+
+    amnt.appendChild(getal);
+    
+    li.appendChild(bdschp);
+    li.appendChild(amnt);
+
 
     const ul = document.getElementById("myUL");
     ul.appendChild(li);
@@ -119,7 +130,7 @@ window.onload = () => {
 
   .then((data) => {
     data.forEach(element => {
-      addNewValue(element.naam, element.id);
+      addNewValue(element.naam, element.id, element.hoeveelheid);
     });
     loader.style.display = "none";
     
