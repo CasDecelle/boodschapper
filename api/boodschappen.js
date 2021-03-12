@@ -3,23 +3,21 @@ const router = express.Router()
 
 let array = [];
 
-
 router.get('/', function (req, res) {
-    res.json(array);
-  })
+  res.json(array);
+})
 
-  router.get('/:id', function (req, res) {
-    
-    
-    res.json(array.find((value) => {
-      if (value.id === parseInt(req.params.id, 10)) {
-        return true;
-      } else {
-        return false;
-      }
-    }));
-    
-  })
+router.get('/:id', function (req, res) {  
+  res.json(array.find((value) => {
+    if (value.id === parseInt(req.params.id, 10)) {
+      return true;
+    } else {
+      return false;
+    }
+    // return value.id === parseInt(req.params.id, 10);
+  }));
+  
+})
 
 router.post('/', function (req, res) {
     
@@ -36,10 +34,22 @@ router.post('/', function (req, res) {
 })
 
 router.delete('/:id', function (req, res) {
-  array = array.filter(item => '' + item.id !== req.params.id);
-  
-  res.sendStatus(200);
+  const itemToDelete = array.find(item => item.id === parseInt(req.params.id, 10));
+  if (!itemToDelete) {
+    res.sendStatus(404);
+  } else {
+    array = array.filter(item => item !== itemToDelete);  
+    res.json(itemToDelete);
+    res.sendStatus(200);
+  }
 })
 
+router.put('/', function (req, res) {
+  const boodschap = {naam: req.body.naam, id: req.body.id, hoeveelheid: req.body.hoeveelheid };
+  const index = array.indexOf(array.find(x => x.id === req.body.id));
+  array[index] = boodschap;
+  res.json(boodschap);
+})
 
 module.exports = router
+

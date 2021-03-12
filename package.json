@@ -4,6 +4,8 @@
   "description": "beschrijvingske",
   "main": "index.js",
   "scripts": {
+    "debug": "set NODE_ENV=debug & set DEBUG=express:* & node index.js",
+    "start": "set NODE_ENV=prod & node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

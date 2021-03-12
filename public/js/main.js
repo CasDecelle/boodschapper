@@ -1,146 +1,96 @@
+const amountMinValue = 1;
+const amountMaxValue = 10;
 
-
-function newItem() {
-  
+newItem = () => {
   const inputValue = document.querySelector("#myInput").value;
   const amountValue = document.querySelector("#amount").value;
 
-  if (inputValue !== "" && amountValue > 0 && amountValue <= 10) {
+  if (
+    inputValue !== "" &&
+    canAddOrUpdateBoodschapItem(amountValue, 1)
+  ) {
+    const data = { naam: inputValue, hoeveelheid: amountValue };
 
-    const data = {naam: inputValue, hoeveelheid: amountValue};
-
-    fetch('http://localhost:3000/api/boodschappen', {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {'Content-type': 'application/json; charset=UTF-8'},
-    })
-    .then((response) => {
-      if (response.status === 200){
-        return response.json()
-      }
-      if (response.status === 404){
-        throw Error('Niet gevonden')
-      }
-      throw Error('Er liep iets mis')
-    })
-  
-    .then((data) => {
-      addNewValue(data.naam, data.id, data.hoeveelheid);
-      
-    })
-    
-    .catch((error) => {
-      alert(`Catch: ${error}`);
-    })
+    postBoodschapItem(data).then((data) => {
+      addNewBoodschapItem(data.id, data.naam, data.hoeveelheid);
+    });
 
     document.getElementById("myInput").value = "";
-    
   }
-
 };
 
+addNewBoodschapItem = (id, name, amount = 1) => {
+  const ulBoodschappen = document.getElementById("bdschp-list");
+  const liBoodschap = document.createElement("li");
+  ulBoodschappen.appendChild(liBoodschap);
 
+  const idDiv = createDivWithText(id, "bdschp-id", true);
+  const itemNameDiv = createDivWithText(name, "item-name");
+  const amountDiv = createDivWithText(amount, "amount");
 
-function addNewValue(value, id, amount = 1) {
-  const li = document.createElement("li");
-    const bdschp = document.createElement("div");
-    const tekst = document.createTextNode(value);
+  const minusButton = createButton("-", "minus");
+  const plusButton = createButton("+", "plus");
+  const deleteButton = createButton("x", "close");
 
-    bdschp.appendChild(tekst);
+  minusButton.addEventListener("click", (event) =>
+    changeBoodschapItemAmount(itemNameDiv, amountDiv, id, -1)
+  );
+  plusButton.addEventListener("click", (event) =>
+    changeBoodschapItemAmount(itemNameDiv, amountDiv, id, 1)
+  );
+  deleteButton.addEventListener("click", (event) =>
+    deleteBoodschap(ulBoodschappen, liBoodschap, id)
+  );
 
-    const amnt = document.createElement("div");
-    const getal = document.createTextNode(amount)
-
-    amnt.appendChild(getal);
-    
-    li.appendChild(bdschp);
-    li.appendChild(amnt);
-
-
-    const ul = document.getElementById("myUL");
-    ul.appendChild(li);
-
-    
-
-    const button = document.createElement("button");
-    const txt = document.createTextNode("x");
-    button.classList.add("close");
-    
-    button.appendChild(txt);
-    li.appendChild(button);
-  
-   button.addEventListener("click", (event) => {
-
-    fetch(`http://localhost:3000/api/boodschappen/${id}`, {
-      method: "DELETE",
-    })
-    .then((response) => {
-      if (response.status === 200){
-        console.log(event);
-        ul.removeChild(li);
-      }
-      if (response.status === 404){
-        throw Error('Niet gevonden')
-      }
-      throw Error('Er liep iets mis')
-    })
-
-   })  
+  appendChildrenToLiElement(liBoodschap, [
+    idDiv,
+    itemNameDiv,
+    amountDiv,
+    minusButton,
+    plusButton,
+    deleteButton,
+  ]);
 };
+
+deleteBoodschap = (ulBoodschappen, liBoodschap, id) => {
+  deleteBoodschapItem(id).then(() => {
+    ulBoodschappen.removeChild(liBoodschap);
+  });
+};
+
+changeBoodschapItemAmount = (itemNameDiv, amountDiv, id, incrementAmount) => {
+  const itemName = itemNameDiv.textContent;
+  const amount = parseInt(amountDiv.textContent, 10);
+  if (canAddOrUpdateBoodschapItem(amount, incrementAmount)) {
+    putBoodschapItem({
+      id,
+      naam: itemName,
+      hoeveelheid: amount + incrementAmount,
+    }).then((data) => {
+      amountDiv.textContent = data.hoeveelheid;
+    });
+  }
+};
+
+canAddOrUpdateBoodschapItem = (amount, incrementAmount) => {
+  if (incrementAmount > 0)
+    return amount >= amountMinValue && amount < amountMaxValue
+  return amount > amountMinValue && amount <= amountMaxValue
+}
 
 window.onload = () => {
-  const button = document.querySelector(".addBtn");
+  const button = document.querySelector(".add-btn");
   button.addEventListener("click", (event) => {
-    console.log(event);
     newItem();
   });
-
 
   const loader = document.querySelector(".loader");
   loader.style.display = "initial";
 
-  /*
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(["appel", "peer", "tomaat"]);
-    }, 5000);
-  });
-
-  
-  promise.then((data) => {
-    data.forEach(element => {
-      addNewValue(element);
+  getBoodschappen().then((data) => {
+    data.forEach((element) => {
+      addNewBoodschapItem(element.id, element.naam, element.hoeveelheid);
     });
     loader.style.display = "none";
-    
   });
-
-  */
- 
-  fetch('http://localhost:3000/api/boodschappen', {})
-  .then((response) => {
-    if (response.status === 200){
-      return response.json()
-    }
-    if (response.status === 404){
-      throw Error('Niet gevonden')
-    }
-    throw Error('Er liep iets mis')
-  })
-
-  .then((data) => {
-    data.forEach(element => {
-      addNewValue(element.naam, element.id, element.hoeveelheid);
-    });
-    loader.style.display = "none";
-    
-  })
-  
-  .catch((error) => {
-    alert(`Catch: ${error}`);
-  })
-  
-  
-
-  
 };

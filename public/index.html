@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>boodscappenlijstje</title>
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/main.css" />
+    <!-- scripts bovenaan zetten met attribute defer ipv onderaan -->
+    <script src="js/api-service.js" defer></script>
+    <script src="js/dom-helper.js" defer></script>
+    <script src="js/main.js" defer></script>
+  </head>
+  <body>
     <div class="boodschappen-wrapper">
-        <h1>Mijn boodschappenlijstje</h1>
-        <div class="boodschappen--card">
-            <input type="text" id="myInput" placeholder="item toevoegen...">
-            <input class="number--card" type="number" id="amount" placeholder="1" min="1" max="10">
-            <button class="addBtn">toevoegen</button>
-            
-        </div>
-        
+      <h1>Mijn boodschappenlijstje</h1>
+      <div class="boodschappen--card">
+        <input type="text" id="myInput" placeholder="item toevoegen..." />
+        <input
+          class="number--card"
+          type="number"
+          id="amount"
+          value="1"
+          min="1"
+          max="10"
+        />
+        <button class="add-btn">Toevoegen</button>
       </div>
+    </div>
 
-      <div class="loader">
-          <p>aan het laden</p>
-      </div>
-      <ul id="myUL">
-        
-        
-      </ul>
+    <div class="loader">
+      <p>Aan het laden</p>
+    </div>
 
-      <script src="js/main.js"></script>
-</body>
+    <ul id="bdschp-list">
+
+    </ul>
+  </body>
 </html>

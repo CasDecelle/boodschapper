@@ -1,70 +1,80 @@
 body {
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;   
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .boodschappen-wrapper {
-    background-color: rgb(82, 31, 221);
-    padding: 1rem;
+  background-color: rgb(82, 31, 221);
+  padding: 1rem;
 }
 
-
-
-.addBtn {
-    border: 1px solid black;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    background-color: rgb(134, 179, 67);
-    color: navy;
-    font-weight: bold;
+.add-btn {
+  border: 1px solid black;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: rgb(134, 179, 67);
+  color: navy;
+  font-weight: bold;
 }
 
-.addBtn:hover {
-    background-color: rgb(17, 160, 72);
-  }
+.add-btn:hover {
+  background-color: rgb(17, 160, 72);
+}
 
 input {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem; 
-    width: 25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  width: 25rem;
 }
 
 .boodschappen--card {
-    margin: auto;
-    width: 100%;
-    padding-top: 1rem;
+  margin: auto;
+  width: 100%;
+  padding-top: 1rem;
 }
 
 .number--card {
-    width: 2rem;
+  width: 2rem;
 }
 
 ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    width: 50%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 50%;
 }
 
 li {
-    padding: 1.2rem;
-    font-weight: bold; 
-    display: flex;
-    justify-content: space-between; 
+  padding: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+li div {
+  color: black
 }
 
 li button {
-    margin-left: 2rem;
+  margin-left: 2rem;
 }
 
-.close { 
-    padding: 0.5rem;
-    font-weight: bold;
-    
-  }
-  
-  
+.close {
+  padding: 0.5rem;
+}
+
+.list-button {
+  font-weight: bold;
+}
+
+/* 
+    https://www.w3schools.com/cssref/css_selectors.asp 
+    bookmark deze site, gebruik ik elke dag als ik met css werk 
+*/
+li:nth-child(2) {
+  background-color: lightgoldenrodyellow;
+}
