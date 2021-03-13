@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>boodscappenlijstje</title>
     <link rel="stylesheet" href="css/main.css" />
-    <!-- scripts bovenaan zetten met attribute defer ipv onderaan -->
+    <script src="js/boodschap.js" defer></script>
     <script src="js/api-service.js" defer></script>
     <script src="js/dom-helper.js" defer></script>
     <script src="js/main.js" defer></script>
@@ -34,5 +34,16 @@
     <ul id="bdschp-list">
 
     </ul>
+
+    <template id="new-bdschp-item">
+        <li>
+          <div class="bdschp-id" hidden></div>
+          <div class="bdschp-item-name"></div>
+          <div class="bdschp-amount"></div>
+          <button class="plus" onclick="">+</button>
+          <button class="minus" onclick="">-</button>
+          <button class="close" onclick="">x</button>
+        </li>
+      </template>
   </body>
 </html>

@@ -93,4 +93,7 @@ window.onload = () => {
     });
     loader.style.display = "none";
   });
+
+  const boodschap = new Boodschap(1, "test", 7);
 };
+

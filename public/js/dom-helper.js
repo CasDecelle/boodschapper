@@ -35,3 +35,8 @@ appendChildrenToLiElement = (li, children) => {
     children.forEach((child) => li.appendChild(child));
   }
 };
+
+createTemplateElement = (querySelector) => {
+  const template = document.querySelector(querySelector);
+  return template.content.cloneNode(true);
+};
